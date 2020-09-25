@@ -1,3 +1,5 @@
+import pytest
+
 from unit.div import div
 
 
@@ -18,3 +20,8 @@ def test_div_expection():
 
 def test_div_zero():
     assert div(10, 0) == None
+
+
+def test_zero_division():
+    with pytest.raises(ZeroDivisionError):
+        1 / 0
