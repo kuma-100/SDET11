@@ -1,1 +1,4 @@
 /venv/
+/unit/allure_html/
+/unit/allure_results/
+/unit/junit.xml
