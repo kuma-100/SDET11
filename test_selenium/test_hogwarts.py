@@ -39,6 +39,7 @@ class TestHogwarts:
     def test_mtsc2020(self):
         self.driver.get("https://testerhome.com/topics/25593")
         self.driver.find_element(By.CSS_SELECTOR, '[target="_blank"]').click()
+        # 点击链接打开新的页面时，需切换窗口才能对新的页面进行页面操作
         print(self.driver.window_handles)
         self.driver.switch_to.window(self.driver.window_handles[1])
         self.driver.find_element(By.LINK_TEXT,'合作伙伴').click()
