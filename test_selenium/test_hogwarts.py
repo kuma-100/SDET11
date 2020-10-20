@@ -1,3 +1,6 @@
+import os
+from time import sleep
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
@@ -6,7 +9,13 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 class TestHogwarts:
     def setup_method(self):
-        self.driver = webdriver.Edge()
+        browser = os.getenv("browser")
+        if browser == "headless":
+            self.driver = webdriver.PhantomJS()
+        elif browser == "chrome":
+            self.driver = webdriver.Chrome()
+        else:
+            self.driver = webdriver.Edge()
         self.driver.get("https://testerhome.com/")
         self.driver.implicitly_wait(5)  # 隐式等待，找不到元素时重复查找直到5秒超时
 
@@ -41,10 +50,11 @@ class TestHogwarts:
         self.driver.find_element(By.CSS_SELECTOR, '[target="_blank"]').click()
         # 点击链接打开新的页面时，需切换窗口才能对新的页面进行页面操作
         print(self.driver.window_handles)
+        # 考虑到网络比较卡时，需等待新页面加载完再切换页面
+        self.wait(10, lambda x: len(self.driver.window_handles) > 1)
         self.driver.switch_to.window(self.driver.window_handles[1])
-        self.driver.find_element(By.LINK_TEXT,'合作伙伴').click()
+        self.driver.find_element(By.LINK_TEXT, '合作伙伴').click()
 
     def teardown_method(self):
-        pass
-        # sleep(20)
-        # self.driver.quit()
+        sleep(20)
+        self.driver.quit()
