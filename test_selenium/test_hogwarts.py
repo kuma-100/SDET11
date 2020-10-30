@@ -9,6 +9,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 class TestHogwarts:
     def setup_method(self):
+        # 多浏览器
         browser = os.getenv("browser")
         if browser == "headless":
             self.driver = webdriver.PhantomJS()
@@ -54,6 +55,10 @@ class TestHogwarts:
         self.wait(10, lambda x: len(self.driver.window_handles) > 1)
         self.driver.switch_to.window(self.driver.window_handles[1])
         self.driver.find_element(By.LINK_TEXT, '合作伙伴').click()
+
+    def test_js(self):
+        # 执行js语句
+        self.driver.execute_script("")
 
     def teardown_method(self):
         sleep(20)
