@@ -10,7 +10,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 class TestHogwarts:
     def setup_method(self):
         # 多浏览器
-        browser = os.getenv("browser")
+        browser = os.getenv("browser", "").lower()
         if browser == "headless":
             self.driver = webdriver.PhantomJS()
         elif browser == "chrome":
@@ -48,17 +48,23 @@ class TestHogwarts:
 
     def test_mtsc2020(self):
         self.driver.get("https://testerhome.com/topics/25593")
+        self.driver.minimize_window()# 最小化界面
         self.driver.find_element(By.CSS_SELECTOR, '[target="_blank"]').click()
         # 点击链接打开新的页面时，需切换窗口才能对新的页面进行页面操作
         print(self.driver.window_handles)
         # 考虑到网络比较卡时，需等待新页面加载完再切换页面
         self.wait(10, lambda x: len(self.driver.window_handles) > 1)
         self.driver.switch_to.window(self.driver.window_handles[1])
-        self.driver.find_element(By.LINK_TEXT, '合作伙伴').click()
+        self.driver.find_element(By.LINK_TEXT, '关于社区').click()
 
     def test_js(self):
         # 执行js语句
-        self.driver.execute_script("")
+        for code in ["return document.title",
+                     'return document.querySelector(".active").className',
+                     'return JSON.stringify(performance.timing)'
+        ]:
+            result = self.driver.execute_script(code)
+            print(result)
 
     def teardown_method(self):
         sleep(20)
