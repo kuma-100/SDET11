@@ -12,7 +12,7 @@ class TestHogwarts:
         # 多浏览器
         '''
         Windows：
-        set browser=chrome
+        set browser=edge
         pytest test_selenium/test_hogwarts.py
         Mac:
         browser=chrome pytest test_selenium/test_hogwarts.py
@@ -20,10 +20,12 @@ class TestHogwarts:
         browser = os.getenv("browser", "").lower()
         if browser == "headless":
             self.driver = webdriver.PhantomJS()
-        elif browser == "chrome":
-            self.driver = webdriver.Chrome()
-        else:
+        elif browser == "edge":
             self.driver = webdriver.Edge()
+        else:
+            options = webdriver.ChromeOptions()
+            # options.add_argument("--headless")
+            self.driver = webdriver.Chrome(options=options)
         self.driver.get("https://testerhome.com/")
         self.driver.implicitly_wait(5)  # 隐式等待，找不到元素时重复查找直到5秒超时
 
@@ -62,7 +64,9 @@ class TestHogwarts:
         # 考虑到网络比较卡时，需等待新页面加载完再切换页面
         self.wait(10, lambda x: len(self.driver.window_handles) > 1)
         self.driver.switch_to.window(self.driver.window_handles[1])
-        self.driver.find_element(By.LINK_TEXT, '关于社区').click()
+        element = (By.LINK_TEXT, '关于社区')
+        self.wait(10, expected_conditions.element_to_be_clickable(element))
+        self.driver.find_element(element).click()
 
     def test_js(self):
         # 执行js语句
