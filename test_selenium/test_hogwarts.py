@@ -24,7 +24,13 @@ class TestHogwarts:
             self.driver = webdriver.Edge()
         else:
             options = webdriver.ChromeOptions()
-            # options.add_argument("--headless")
+            options.add_argument("--headless")
+            options.add_argument("--disable-gpu")
+            options.add_argument("--window-size=1280,1696")
+            # 在后台启动一个chrome进程
+            # /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --romote-debugging-port=9222
+            # 使用已经存在的chrome进程
+            # options.debugger_address="127.0.0.1:9222"
             self.driver = webdriver.Chrome(options=options)
         self.driver.get("https://testerhome.com/")
         self.driver.implicitly_wait(5)  # 隐式等待，找不到元素时重复查找直到5秒超时
@@ -66,7 +72,7 @@ class TestHogwarts:
         self.driver.switch_to.window(self.driver.window_handles[1])
         element = (By.LINK_TEXT, '关于社区')
         self.wait(10, expected_conditions.element_to_be_clickable(element))
-        self.driver.find_element(element).click()
+        self.driver.find_element(*element).click()
 
     def test_js(self):
         # 执行js语句
