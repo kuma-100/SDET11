@@ -13,7 +13,9 @@ class TestIndex:
         # self.driver.find_element(By.ID, "submit_btn").click()
 
     def test_login(self):
-        self.index.goto_login().goto_registry().register("霍格沃兹学院")
+        register_page=self.index.goto_login().goto_registry().register("霍格沃兹学院")
+        print(register_page.get_error_message())
+        assert "请选择" in "|".join(register_page.get_error_message())
 
     def teardown(self):
         self.index.close()
