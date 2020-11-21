@@ -1,15 +1,26 @@
 from selenium.webdriver.common.by import By
 
+from test_selenium.page.base_page import BasePage
 
-class Contact:
-    _add_menber_button=(By.CSS_SELECTOR,"xxxx")
+
+class Contact(BasePage):
+    _add_menber_button = (By.CSS_SELECTOR, "xxxx")
+
     def add_member(self, data):
         # self.driver.find_element("添加成员").click
         # sendkeys
         # click save
+        name_locator = (By.NAME, "username")
+        acctid_locator = (By.NAME, "acctid")
+        gender_locator = (By.CSS_SELECTOR, ".ww_radio[value='2']")
+        mobile_locator = (By.NAME, "mobile")
+        self.find(*name_locator).send_keys("長濱睡")
+        self.find(*acctid_locator).send_keys("nagahamaneru")
+        self.find(*gender_locator).click()
+        self.find(*mobile_locator).send_keys("15912345678")
         return self
 
-    def add_member_error(self,data):
+    def add_member_error(self, data):
         return AddMemberPage()
 
     def search(self, name):
