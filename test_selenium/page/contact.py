@@ -17,6 +17,8 @@ class Contact(BasePage):
         self.find(*name_locator).send_keys("長濱睡")
         self.find(*acctid_locator).send_keys("nagahamaneru")
         self.find(*gender_locator).click()
+        self.find(By.CSS_SELECTOR, ".ww_telInput_zipCode_input").click()
+        self.find(By.CSS_SELECTOR, "li[data-value='853']").click()
         self.find(*mobile_locator).send_keys("15912345678")
         return self
 
