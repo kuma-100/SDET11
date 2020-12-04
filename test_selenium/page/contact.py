@@ -14,12 +14,12 @@ class Contact(BasePage):
         acctid_locator = (By.NAME, "acctid")
         gender_locator = (By.CSS_SELECTOR, ".ww_radio[value='2']")
         mobile_locator = (By.NAME, "mobile")
-        self.find(*name_locator).send_keys("長濱睡")
-        self.find(*acctid_locator).send_keys("nagahamaneru")
-        self.find(*gender_locator).click()
+        self.find(name_locator).send_keys("長濱睡")
+        self.find(acctid_locator).send_keys("nagahamaneru")
+        self.find(gender_locator).click()
         self.find(By.CSS_SELECTOR, ".ww_telInput_zipCode_input").click()
         self.find(By.CSS_SELECTOR, "li[data-value='853']").click()
-        self.find(*mobile_locator).send_keys("15912345678")
+        self.find(mobile_locator).send_keys("15912345678")
         return self
 
     def add_member_error(self, data):

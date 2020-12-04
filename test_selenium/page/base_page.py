@@ -31,8 +31,11 @@ class BasePage:
             # Login与Register等页面需要用这个方法
             self._driver = driver
 
-    def find(self, *locator):
-        return self._driver.find_element(*locator)
+    def find(self, by, locator=""):
+        if isinstance(by, tuple):
+            return self._driver.find_element(*by)
+        else:
+            return self._driver.find_element(by, locator)
 
     def wait(self, timeout, method):
         # 显式等待，封装方法

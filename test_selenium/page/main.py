@@ -31,7 +31,10 @@ class Main(BasePage):
 
     def add_member(self):
         locator = (By.LINK_TEXT, "添加成员")
-        self.find(*locator).click()
+        self.find(locator).click()
         # driverBug：浏览器缩放时，无法执行点击，可使用JS点击
-        # self._driver.execute_script("arguments[0].click();", self.find(*locator))
+        # self._driver.execute_script("arguments[0].click();", self.find(locator))
         return Contact(reuse=True)
+
+    def send_message(self):
+        return self
