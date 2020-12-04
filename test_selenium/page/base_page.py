@@ -2,6 +2,7 @@ from time import sleep
 
 from selenium import webdriver
 from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.support.wait import WebDriverWait
 
 
 class BasePage:
@@ -32,6 +33,10 @@ class BasePage:
 
     def find(self, *locator):
         return self._driver.find_element(*locator)
+
+    def wait(self, timeout, method):
+        # 显式等待，封装方法
+        WebDriverWait(self._driver, timeout).until(method)
 
     def close(self):
         sleep(20)

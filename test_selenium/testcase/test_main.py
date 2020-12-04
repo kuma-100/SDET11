@@ -10,7 +10,8 @@ class TestMain:
         assert "aaa" in self.main.import_user().get_message()
 
     def test_import_user(self):
-        self.main.import_user("xxx.file")
+        self.main.import_user(
+            "E:\\TestDevelopment\\PycharmProjects\\pythonProject\\test_selenium\\testcase\\通讯录批量导入模板.xlsx")
         assert "success" in self.main.get_message()
 
     def test_send_message(self):

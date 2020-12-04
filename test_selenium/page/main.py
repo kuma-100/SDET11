@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions
 
 from test_selenium.page.base_page import BasePage
 from test_selenium.page.contact import Contact
@@ -10,7 +11,13 @@ class Main(BasePage):
     def download(self):
         pass
 
-    def import_user(self):
+    def import_user(self, path):
+        self.find(By.LINK_TEXT, "导入通讯录").click()
+        # 文件上传
+        self.find(By.CSS_SELECTOR, ".ww_fileImporter_fileContainer_uploadInputMask").send_keys(path)
+        self.find(By.LINK_TEXT, "导入").click()
+        self.wait(10, expected_conditions.element_to_be_clickable((By.LINK_TEXT, "完成")))
+        self.find(By.LINK_TEXT, "完成").click()
         return self
 
     def goto_app(self):
