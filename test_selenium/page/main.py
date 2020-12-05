@@ -3,6 +3,7 @@ from selenium.webdriver.support import expected_conditions
 
 from test_selenium.page.base_page import BasePage
 from test_selenium.page.contact import Contact
+from test_selenium.page.message import Message
 
 
 class Main(BasePage):
@@ -37,4 +38,6 @@ class Main(BasePage):
         return Contact(reuse=True)
 
     def send_message(self):
-        return self
+        locator = (By.LINK_TEXT, "消息群发")
+        self.find(locator).click()
+        return Message(reuse=True)

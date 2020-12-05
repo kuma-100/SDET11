@@ -15,6 +15,6 @@ class TestMain:
         # assert "success" in self.main.get_message()
 
     def test_send_message(self):
-        self.main.send_message().send_message(app="", content="contect", group="")
-
-        assert "" in self.main.get_message()
+        message = self.main.send_message()
+        message.send(app="公告", content="contect", group="羽汐动漫社")
+        # assert "contect" in message.get_history()
