@@ -2,6 +2,7 @@ from time import sleep
 
 from selenium import webdriver
 from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
 
@@ -37,8 +38,13 @@ class BasePage:
         else:
             return self._driver.find_element(by, locator)
 
-    def wait(self, timeout, method):
+    def wait_until_clickable(self, timeout, element):
         # 显式等待，封装方法
+        method = expected_conditions.element_to_be_clickable(element)
+        WebDriverWait(self._driver, timeout).until(method)
+
+    def wait_until_visibility_located(self, timeout, element):
+        method = expected_conditions.visibility_of_element_located(element)
         WebDriverWait(self._driver, timeout).until(method)
 
     def close(self):

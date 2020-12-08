@@ -16,5 +16,5 @@ class TestMain:
 
     def test_send_message(self):
         message = self.main.send_message()
-        message.send(app="公告", content="contect", group="羽汐动漫社")
+        message.send(app="公告", title="title", content="contect", group="羽汐动漫社", author="author")
         # assert "contect" in message.get_history()
